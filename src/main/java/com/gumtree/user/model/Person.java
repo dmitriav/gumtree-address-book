@@ -95,4 +95,14 @@ public class Person {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(firstName);
+		builder.append(" ");
+		builder.append(lastName);
+		String value = builder.toString();
+		return value;
+	}
 }

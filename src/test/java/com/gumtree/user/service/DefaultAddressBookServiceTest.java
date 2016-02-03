@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gumtree.user.dao.AddressBookDao;
+import com.gumtree.user.dao.MockAddressBookDao;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
@@ -17,7 +19,9 @@ public class DefaultAddressBookServiceTest {
 
 	@Before
 	public void setUp() {
+		AddressBookDao addressBookDao = new MockAddressBookDao();
 		addressBookService = new DefaultAddressBookService();
+		addressBookService.setAddressBookDao(addressBookDao);
 	}
 
 
@@ -45,6 +49,6 @@ public class DefaultAddressBookServiceTest {
 	@Test
 	public void getAgeDifference() {
 		int days = addressBookService.getAgeDifference("Bill", "Paul");
-		Assert.assertEquals(2890, days);
+		Assert.assertEquals(2862, days);
 	}
 }
