@@ -1,5 +1,8 @@
 package com.gumtree.user.service;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,11 +31,13 @@ public class DefaultAddressBookServiceTest {
 	public void getOldestPerson() {
 		Person person = addressBookService.getOldestPerson();
 
+		LocalDate expectedDateOfBirth = LocalDate.of(1974, Month.AUGUST, 14);
+
 		Person expectedPerson = new Person();
 		expectedPerson.setFirstName("Wes");
 		expectedPerson.setLastName("Jackson");
 		expectedPerson.setSex(Sex.MALE);
-		expectedPerson.setDateOfBirth("14/08/74");
+		expectedPerson.setDateOfBirth(expectedDateOfBirth);
 
 		Assert.assertEquals(expectedPerson, person);
 	}
