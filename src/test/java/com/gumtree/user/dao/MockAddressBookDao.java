@@ -1,15 +1,13 @@
 package com.gumtree.user.dao;
 
-import java.time.LocalDate;
-import java.time.Month;
-
+import com.gumtree.user.model.MockPerson;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
 public class MockAddressBookDao implements AddressBookDao {
 
 	@Override
-	public int getCountBySex(Sex sex) {
+	public int getPersonCountBySex(Sex sex) {
 		if (sex == null) {
 			return 0;
 		}
@@ -26,14 +24,7 @@ public class MockAddressBookDao implements AddressBookDao {
 
 	@Override
 	public Person getOldestPerson() {
-		LocalDate dateOfBirth = LocalDate.of(1974, Month.AUGUST, 14);
-
-		Person person = new Person();
-		person.setFirstName("Wes");
-		person.setLastName("Jackson");
-		person.setSex(Sex.MALE);
-		person.setDateOfBirth(dateOfBirth);
-
+		Person person = MockPerson.getWesJackson();
 		return person;
 	}
 
@@ -43,35 +34,21 @@ public class MockAddressBookDao implements AddressBookDao {
 			return null;
 		}
 
+		Person person = null;
+
 		if (firstName.equals("Bill")) {
-			LocalDate dateOfBirth = LocalDate.of(1977, Month.MARCH, 16);
-			Person person = new Person();
-			person.setFirstName("Bill");
-			person.setLastName("McKnight");
-			person.setSex(Sex.MALE);
-			person.setDateOfBirth(dateOfBirth);
-			return person;
+			person = MockPerson.getBillMcKnight();
 		}
 
 		if (firstName.equals("Paul")) {
-			LocalDate dateOfBirth = LocalDate.of(1985, Month.JANUARY, 15);
-			Person person = new Person();
-			person.setFirstName("Paul");
-			person.setLastName("Robinson");
-			person.setSex(Sex.MALE);
-			person.setDateOfBirth(dateOfBirth);
-			return person;
+			person = MockPerson.getPaulRobinson();
 		}
 
 		if (firstName.equals("David")) {
-			Person person = new Person();
-			person.setFirstName("David");
-			person.setLastName("Cameron");
-			person.setSex(Sex.MALE);
+			person = MockPerson.getDavidCameron();
 			person.setDateOfBirth(null);
-			return person;
 		}
 
-		return null;
+		return person;
 	}
 }

@@ -2,10 +2,11 @@ package com.gumtree.user.service;
 
 import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
+import com.gumtree.user.model.Sex;
 
 public interface AddressBookService {
 
-	int getMaleCount();
+	int getPersonCountBySex(Sex sex);
 
 	Person getOldestPerson();
 

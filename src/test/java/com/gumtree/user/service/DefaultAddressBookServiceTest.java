@@ -1,8 +1,5 @@
 package com.gumtree.user.service;
 
-import java.time.LocalDate;
-import java.time.Month;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +7,7 @@ import org.junit.Test;
 import com.gumtree.user.dao.AddressBookDao;
 import com.gumtree.user.dao.MockAddressBookDao;
 import com.gumtree.user.model.AddressBookException;
+import com.gumtree.user.model.MockPerson;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
@@ -28,22 +26,14 @@ public class DefaultAddressBookServiceTest {
 
 	@Test
 	public void getMaleCount() {
-		int count = addressBookService.getMaleCount();
+		int count = addressBookService.getPersonCountBySex(Sex.MALE);
 		Assert.assertEquals(3, count);
 	}
 
 	@Test
 	public void getOldestPerson() {
 		Person person = addressBookService.getOldestPerson();
-
-		LocalDate expectedDateOfBirth = LocalDate.of(1974, Month.AUGUST, 14);
-
-		Person expectedPerson = new Person();
-		expectedPerson.setFirstName("Wes");
-		expectedPerson.setLastName("Jackson");
-		expectedPerson.setSex(Sex.MALE);
-		expectedPerson.setDateOfBirth(expectedDateOfBirth);
-
+		Person expectedPerson = MockPerson.getWesJackson();
 		Assert.assertEquals(expectedPerson, person);
 	}
 

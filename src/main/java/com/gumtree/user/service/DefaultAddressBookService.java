@@ -20,9 +20,9 @@ public class DefaultAddressBookService implements AddressBookService {
 
 
 	@Override
-	public int getMaleCount() {
-		int count = addressBookDao.getCountBySex(Sex.MALE);
-		logger.debug("Address book has {} males", count);
+	public int getPersonCountBySex(Sex sex) {
+		int count = addressBookDao.getPersonCountBySex(sex);
+		logger.debug("Address book has {} {}(s)", count, sex);
 		return count;
 	}
 
