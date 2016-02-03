@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gumtree.user.dao.AddressBookDao;
+import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
@@ -33,22 +34,38 @@ public class DefaultAddressBookService implements AddressBookService {
 	}
 
 	@Override
-	public int getAgeDifference(String firstName, String otherFirstName) {
+	public long getAgeDifference(String firstName, String otherFirstName) 
+			throws AddressBookException {
 		Person person = addressBookDao.getPersonByFirstName(firstName);
-		Person otherPerson = addressBookDao.getPersonByFirstName(otherFirstName);
+		if (person == null) {
+			logger.warn("{} not found", firstName);
+			throw new AddressBookException();
+		}
 
-		// TODO: add exception if null objects returned
+		Person otherPerson = addressBookDao.getPersonByFirstName(otherFirstName);
+		if (otherPerson == null) {
+			logger.warn("{} not found", otherFirstName);
+			throw new AddressBookException();
+		}
 
 		LocalDate dateOfBirth = person.getDateOfBirth();
-		LocalDate otherDateOfBirth = otherPerson.getDateOfBirth();
-		long days = ChronoUnit.DAYS.between(dateOfBirth, otherDateOfBirth);
+		if (dateOfBirth == null) {
+			logger.warn("Date of birth missing for {}", person);
+			throw new AddressBookException();
+		}
 
-		// TODO: change interface to return a long type
+		LocalDate otherDateOfBirth = otherPerson.getDateOfBirth();
+		if (otherDateOfBirth == null) {
+			logger.warn("Date of birth missing for {}", otherPerson);
+			throw new AddressBookException();
+		}
+
+		long days = ChronoUnit.DAYS.between(dateOfBirth, otherDateOfBirth);
 
 		logger.debug("The age difference between {} and {} is {} day(s)", 
 				firstName, otherFirstName, days);
 
-		return (int) days;
+		return days;
 	}
 
 

@@ -63,6 +63,15 @@ public class MockAddressBookDao implements AddressBookDao {
 			return person;
 		}
 
+		if (firstName.equals("David")) {
+			Person person = new Person();
+			person.setFirstName("David");
+			person.setLastName("Cameron");
+			person.setSex(Sex.MALE);
+			person.setDateOfBirth(null);
+			return person;
+		}
+
 		return null;
 	}
 }

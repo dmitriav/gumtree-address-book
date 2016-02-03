@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.gumtree.user.dao.AddressBookDao;
 import com.gumtree.user.dao.MockAddressBookDao;
+import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
@@ -47,8 +48,21 @@ public class DefaultAddressBookServiceTest {
 	}
 
 	@Test
-	public void getAgeDifference() {
-		int days = addressBookService.getAgeDifference("Bill", "Paul");
+	public void getAgeDifference() throws AddressBookException {
+		long days = addressBookService.getAgeDifference("Bill", "Paul");
 		Assert.assertEquals(2862, days);
+	}
+
+	@Test(expected = AddressBookException.class)
+	public void getAgeDifferenceUnknownNames() throws AddressBookException {
+		addressBookService.getAgeDifference("Tony", "David");
+		Assert.fail("Should throw exception since unknown names");
+	}
+
+	@Test(expected = AddressBookException.class)
+	public void getAgeDifferenceMissingDateOfBirth() 
+			throws AddressBookException {
+		addressBookService.getAgeDifference("Bill", "David");
+		Assert.fail("Should throw exception since date of birth missing");
 	}
 }

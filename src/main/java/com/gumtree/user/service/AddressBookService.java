@@ -1,5 +1,6 @@
 package com.gumtree.user.service;
 
+import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 
 public interface AddressBookService {
@@ -8,5 +9,6 @@ public interface AddressBookService {
 
 	Person getOldestPerson();
 
-	int getAgeDifference(String firstName, String otherFirstName);
+	long getAgeDifference(String firstName, String otherFirstName) 
+			throws AddressBookException;
 }
