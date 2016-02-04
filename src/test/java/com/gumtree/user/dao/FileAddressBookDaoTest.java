@@ -59,6 +59,13 @@ public class FileAddressBookDaoTest {
 	}
 
 	@Test
+	public void getOldestPersonAddressBookEmpty() throws AddressBookException {
+		addressBookDao.setFileName("src/test/resources/AddressBookEmpty");
+		Person person = addressBookDao.getOldestPerson();
+		Assert.assertNull(person);
+	}
+
+	@Test
 	public void getPersonByFirstName() throws AddressBookException {
 		Person person = addressBookDao.getPersonByFirstName(" WES ");
 		Person expectedPerson = MockPerson.getWesJackson();

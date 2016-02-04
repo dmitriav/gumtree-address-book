@@ -12,5 +12,6 @@
 	</root>
 
 	<logger name="com.gumtree" level="WARN" />
+	<logger name="com.gumtree.user.service.AddressBookApplication" level="ALL" />
 
 </configuration>

@@ -20,6 +20,14 @@ import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
+/**
+ * This implementation uses Stream API to iterate objects. 
+ * Address book is loaded from a configured file 
+ * and cached in memory for later use. 
+ * 
+ * @author Dmitri Avdejev
+ * @since 04/02/2016
+ */
 public class FileAddressBookDao implements AddressBookDao {
 
 	private static Logger logger = LoggerFactory.getLogger(
@@ -53,7 +61,7 @@ public class FileAddressBookDao implements AddressBookDao {
 			int count = contacts.size();
 			logger.debug("Address book loaded with {} contact(s)", count);
 		} catch (Exception exception) {
-			logger.error("Can't read an address book", exception);
+			logger.error("Can't read the specified address book", exception);
 			throw new AddressBookException(exception);
 		}
 
@@ -94,8 +102,8 @@ public class FileAddressBookDao implements AddressBookDao {
 				-> person.getDateOfBirth() != null;
 		Predicate<Person> fullPredicate = personNotNull.and(dateOfBirthNotNull);
 
-		Comparator<Person> byDateOfBirth = (p1, p2) 
-				-> p1.getDateOfBirth().compareTo(p2.getDateOfBirth());
+		Comparator<Person> byDateOfBirth = (person1, person2) 
+				-> person1.getDateOfBirth().compareTo(person2.getDateOfBirth());
 
 		Person person = contacts.stream().filter(fullPredicate)
 				.sorted(byDateOfBirth).findFirst().orElse(null);

@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
+/**
+ * @author Dmitri Avdejev
+ * @since 04/02/2016
+ */
 public class PersonMapper implements Function<String, Person> {
 
 	private static final DateTimeFormatter DATE_OF_BIRTH_FORMATTER 

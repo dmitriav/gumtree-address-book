@@ -11,6 +11,10 @@ import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
+/**
+ * @author Dmitri Avdejev
+ * @since 04/02/2016
+ */
 public class DefaultAddressBookService implements AddressBookService {
 
 	private static Logger logger = LoggerFactory.getLogger(

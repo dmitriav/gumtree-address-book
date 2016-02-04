@@ -4,8 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gumtree.user.dao.AddressBookDao;
-import com.gumtree.user.dao.MockAddressBookDao;
+import com.gumtree.user.dao.FileAddressBookDao;
 import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.MockPerson;
 import com.gumtree.user.model.Person;
@@ -18,7 +17,10 @@ public class DefaultAddressBookServiceTest {
 
 	@Before
 	public void setUp() {
-		AddressBookDao addressBookDao = new MockAddressBookDao();
+		// AddressBookDao addressBookDao = new MockAddressBookDao();
+		FileAddressBookDao addressBookDao = new FileAddressBookDao();
+		addressBookDao.setFileName("src/test/resources/AddressBook");
+
 		addressBookService = new DefaultAddressBookService();
 		addressBookService.setAddressBookDao(addressBookDao);
 	}
