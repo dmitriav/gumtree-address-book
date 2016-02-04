@@ -5,7 +5,7 @@ import com.gumtree.user.model.Sex;
 
 public interface AddressBookDao {
 
-	int getPersonCountBySex(Sex sex);
+	long getPersonCountBySex(Sex sex);
 
 	Person getOldestPerson();
 

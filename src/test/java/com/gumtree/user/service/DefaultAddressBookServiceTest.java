@@ -26,7 +26,7 @@ public class DefaultAddressBookServiceTest {
 
 	@Test
 	public void getMaleCount() {
-		int count = addressBookService.getPersonCountBySex(Sex.MALE);
+		long count = addressBookService.getPersonCountBySex(Sex.MALE);
 		Assert.assertEquals(3, count);
 	}
 

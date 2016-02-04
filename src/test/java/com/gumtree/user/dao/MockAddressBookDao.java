@@ -7,7 +7,7 @@ import com.gumtree.user.model.Sex;
 public class MockAddressBookDao implements AddressBookDao {
 
 	@Override
-	public int getPersonCountBySex(Sex sex) {
+	public long getPersonCountBySex(Sex sex) {
 		if (sex == null) {
 			return 0;
 		}

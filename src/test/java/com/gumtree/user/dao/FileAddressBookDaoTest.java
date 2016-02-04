@@ -16,14 +16,29 @@ public class FileAddressBookDaoTest {
 	@Before
 	public void setUp() {
 		addressBookDao = new FileAddressBookDao();
-		addressBookDao.setFileName("AddressBook");
+		addressBookDao.setFileName("src/test/resources/AddressBook");
 	}
 
 
 	@Test
 	public void getPersonCountBySex() {
-		int count = addressBookDao.getPersonCountBySex(Sex.FEMALE);
+		long count = 0; 
+
+		count = addressBookDao.getPersonCountBySex(Sex.MALE);
+		Assert.assertEquals(3, count);
+
+		count = addressBookDao.getPersonCountBySex(Sex.FEMALE);
 		Assert.assertEquals(2, count);
+
+		count = addressBookDao.getPersonCountBySex(null);
+		Assert.assertEquals(0, count);
+	}
+
+	@Test
+	public void getPersonCountBySexAddressBookEmpty() {
+		addressBookDao.setFileName("src/test/resources/AddressBookEmpty");
+		long count = addressBookDao.getPersonCountBySex(Sex.MALE);
+		Assert.assertEquals(0, count);
 	}
 
 	@Test
