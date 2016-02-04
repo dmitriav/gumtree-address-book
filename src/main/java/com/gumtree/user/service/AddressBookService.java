@@ -6,9 +6,9 @@ import com.gumtree.user.model.Sex;
 
 public interface AddressBookService {
 
-	long getPersonCountBySex(Sex sex);
+	long getPersonCountBySex(Sex sex) throws AddressBookException;
 
-	Person getOldestPerson();
+	Person getOldestPerson() throws AddressBookException;
 
 	long getAgeDifference(String firstName, String otherFirstName) 
 			throws AddressBookException;

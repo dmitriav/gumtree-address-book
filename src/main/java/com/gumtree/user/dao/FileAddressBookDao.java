@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
 
@@ -27,7 +28,8 @@ public class FileAddressBookDao implements AddressBookDao {
 	private List<Person> contacts;
 
 
-	private synchronized List<Person> getContacts() {
+	private synchronized List<Person> getContacts() 
+			throws AddressBookException {
 		if (contacts != null) {
 			return contacts;
 		}
@@ -51,6 +53,7 @@ public class FileAddressBookDao implements AddressBookDao {
 			logger.debug("Address book loaded with {} contact(s)", count);
 		} catch (Exception exception) {
 			logger.error("Can't read an address book", exception);
+			throw new AddressBookException(exception);
 		}
 
 		return contacts;
@@ -58,7 +61,7 @@ public class FileAddressBookDao implements AddressBookDao {
 
 
 	@Override
-	public long getPersonCountBySex(Sex sex) {
+	public long getPersonCountBySex(Sex sex) throws AddressBookException {
 		List<Person> contacts = getContacts();
 		if (contacts == null || sex == null) {
 			return 0;

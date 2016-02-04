@@ -25,13 +25,13 @@ public class DefaultAddressBookServiceTest {
 
 
 	@Test
-	public void getMaleCount() {
+	public void getMaleCount() throws AddressBookException {
 		long count = addressBookService.getPersonCountBySex(Sex.MALE);
 		Assert.assertEquals(3, count);
 	}
 
 	@Test
-	public void getOldestPerson() {
+	public void getOldestPerson() throws AddressBookException {
 		Person person = addressBookService.getOldestPerson();
 		Person expectedPerson = MockPerson.getWesJackson();
 		Assert.assertEquals(expectedPerson, person);

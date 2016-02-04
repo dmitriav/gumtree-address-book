@@ -20,14 +20,14 @@ public class DefaultAddressBookService implements AddressBookService {
 
 
 	@Override
-	public long getPersonCountBySex(Sex sex) {
+	public long getPersonCountBySex(Sex sex) throws AddressBookException {
 		long count = addressBookDao.getPersonCountBySex(sex);
 		logger.debug("Address book has {} {}(s)", count, sex);
 		return count;
 	}
 
 	@Override
-	public Person getOldestPerson() {
+	public Person getOldestPerson() throws AddressBookException {
 		Person person = addressBookDao.getOldestPerson();
 		logger.debug("{} is the oldest person", person);
 		return person;

@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gumtree.user.model.AddressBookException;
 import com.gumtree.user.model.MockPerson;
 import com.gumtree.user.model.Person;
 import com.gumtree.user.model.Sex;
@@ -21,7 +22,7 @@ public class FileAddressBookDaoTest {
 
 
 	@Test
-	public void getPersonCountBySex() {
+	public void getPersonCountBySex() throws AddressBookException {
 		long count = 0; 
 
 		count = addressBookDao.getPersonCountBySex(Sex.MALE);
@@ -35,10 +36,19 @@ public class FileAddressBookDaoTest {
 	}
 
 	@Test
-	public void getPersonCountBySexAddressBookEmpty() {
+	public void getPersonCountBySexAddressBookEmpty() 
+			throws AddressBookException {
 		addressBookDao.setFileName("src/test/resources/AddressBookEmpty");
 		long count = addressBookDao.getPersonCountBySex(Sex.MALE);
 		Assert.assertEquals(0, count);
+	}
+
+	@Test(expected = AddressBookException.class)
+	public void getPersonCountBySexInvalidAddressBookFile() 
+			throws AddressBookException {
+		addressBookDao.setFileName("src/test/resources/AddressBookInvalid");
+		addressBookDao.getPersonCountBySex(Sex.MALE);
+		Assert.fail("Should throw exception since file is invalid");
 	}
 
 	@Test
