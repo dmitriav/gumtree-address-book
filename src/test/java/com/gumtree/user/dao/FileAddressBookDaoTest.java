@@ -52,7 +52,7 @@ public class FileAddressBookDaoTest {
 	}
 
 	@Test
-	public void getOldestPerson() {
+	public void getOldestPerson() throws AddressBookException {
 		Person person = addressBookDao.getOldestPerson();
 		Person expectedPerson = MockPerson.getWesJackson();
 		Assert.assertEquals(expectedPerson, person);

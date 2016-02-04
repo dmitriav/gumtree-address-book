@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -82,8 +83,25 @@ public class FileAddressBookDao implements AddressBookDao {
 	}
 
 	@Override
-	public Person getOldestPerson() {
-		throw new UnsupportedOperationException();
+	public Person getOldestPerson() throws AddressBookException {
+		List<Person> contacts = getContacts();
+		if (contacts == null) {
+			return null;
+		}
+
+		Predicate<Person> personNotNull = Objects::nonNull;
+		Predicate<Person> dateOfBirthNotNull = person 
+				-> person.getDateOfBirth() != null;
+		Predicate<Person> fullPredicate = personNotNull.and(dateOfBirthNotNull);
+
+		Comparator<Person> byDateOfBirth = (p1, p2) 
+				-> p1.getDateOfBirth().compareTo(p2.getDateOfBirth());
+
+		Person person = contacts.stream().filter(fullPredicate)
+				.sorted(byDateOfBirth).findFirst().orElse(null);
+		logger.debug("Found {}", person);
+
+		return person;
 	}
 
 	@Override
