@@ -40,9 +40,9 @@ public class FileAddressBookDao implements AddressBookDao {
 			Stream<String> stream = reader.lines();
 
 			Function<String, Person> mapper = new PersonMapper();
-			Predicate<Person> nonNullPredicate = Objects::nonNull;
+			Predicate<Person> personNotNull = Objects::nonNull;
 
-			contacts = stream.map(mapper).filter(nonNullPredicate)
+			contacts = stream.map(mapper).filter(personNotNull)
 					.collect(Collectors.toList());
 
 			if (contacts == null) {
@@ -62,14 +62,18 @@ public class FileAddressBookDao implements AddressBookDao {
 
 	@Override
 	public long getPersonCountBySex(Sex sex) throws AddressBookException {
-		List<Person> contacts = getContacts();
-		if (contacts == null || sex == null) {
+		if (sex == null) {
 			return 0;
 		}
 
-		Predicate<Person> nonNullPredicate = Objects::nonNull;
-		Predicate<Person> sexPredicate = person -> person.getSex() == sex;
-		Predicate<Person> fullPredicate = nonNullPredicate.and(sexPredicate);
+		List<Person> contacts = getContacts();
+		if (contacts == null) {
+			return 0;
+		}
+
+		Predicate<Person> personNotNull = Objects::nonNull;
+		Predicate<Person> sexEquals = person -> person.getSex() == sex;
+		Predicate<Person> fullPredicate = personNotNull.and(sexEquals);
 
 		long count = contacts.stream().filter(fullPredicate).count();
 		logger.debug("Address book has {} {}(s)", count, sex);
@@ -83,8 +87,30 @@ public class FileAddressBookDao implements AddressBookDao {
 	}
 
 	@Override
-	public Person getPersonByFirstName(String firstName) {
-		throw new UnsupportedOperationException();
+	public Person getPersonByFirstName(String firstName) 
+			throws AddressBookException {
+		if (firstName == null) {
+			return null;
+		}
+
+		List<Person> contacts = getContacts();
+		if (contacts == null) {
+			return null;
+		}
+
+		Predicate<Person> personNotNull = Objects::nonNull;
+		Predicate<Person> nameNotNull = person 
+				-> person.getFirstName() != null;
+		Predicate<Person> nameEquals = person 
+				-> person.getFirstName().equalsIgnoreCase(firstName.trim());
+		Predicate<Person> fullPredicate = personNotNull.and(nameNotNull)
+				.and(nameEquals);
+
+		Person person = contacts.stream().filter(fullPredicate)
+				.findFirst().orElse(null);
+		logger.debug("Found {}", person);
+
+		return person;
 	}
 
 
