@@ -3,4 +3,4 @@ This is a solution project for Gumtree coding challenge, implemented by Dmitri A
 To build and test the application you need to have Java 8 and Maven 3 installed.
 
 The main application is here: 
-./src/main/java/com/gumtree/user/service/AddressBookApplication.java
+[src/main/java/com/gumtree/user/service/AddressBookApplication.java] (src/main/java/com/gumtree/user/service/AddressBookApplication.java)
